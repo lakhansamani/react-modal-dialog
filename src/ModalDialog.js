@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import dynamics from 'dynamics.js';
@@ -7,6 +7,7 @@ import CloseCircle from './CloseCircle';
 import EventStack from 'active-event-stack';
 import keycode from 'keycode';
 import { inject } from 'narcissus';
+import PropTypes from 'prop-types';
 
 const styles = {
   dialog: {

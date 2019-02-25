@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 // Render into subtree is necessary for parent contexts to transfer over
 // For example, for react-router
 const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer;
@@ -10,23 +10,31 @@ export default class ModalPortal extends React.Component {
     onClose: PropTypes.func, // This is called when the dialog should close
     children: PropTypes.node,
     onModalDidMount: PropTypes.func, // optional, called on mount
-    onModalWillUnmount: PropTypes.func, // optional, called on unmount
+    onModalWillUnmount: PropTypes.func // optional, called on unmount
   };
   componentDidMount = () => {
     // Create a div and append it to the body
-    this._target = document.body.appendChild(document.createElement('div'));
+    this._target = document.body.appendChild(document.createElement("div"));
 
     // Mount a component on that div
-    this._component = renderSubtreeIntoContainer(this, this.props.children, this._target);
+    this._component = renderSubtreeIntoContainer(
+      this,
+      this.props.children,
+      this._target
+    );
 
     // A handler call in case you want to do something when a modal opens, like add a class to the body or something
-    if (typeof this.props.onModalDidMount === 'function') {
+    if (typeof this.props.onModalDidMount === "function") {
       this.props.onModalDidMount();
     }
   };
   componentDidUpdate = () => {
     // When the child component updates, we have to make sure the content rendered to the DOM is updated to
-    this._component = renderSubtreeIntoContainer(this, this.props.children, this._target);
+    this._component = renderSubtreeIntoContainer(
+      this,
+      this.props.children,
+      this._target
+    );
   };
   componentWillUnmount = () => {
     /**
@@ -41,7 +49,7 @@ export default class ModalPortal extends React.Component {
     const done = () => {
       // Modal will unmount now
       // Call a handler, like onModalDidMount
-      if (typeof this.props.onModalWillUnmount === 'function') {
+      if (typeof this.props.onModalWillUnmount === "function") {
         this.props.onModalWillUnmount();
       }
 
@@ -51,7 +59,7 @@ export default class ModalPortal extends React.Component {
     };
 
     // A similar API to react-transition-group
-    if (typeof this._component.componentWillLeave == 'function') {
+    if (typeof this._component.componentWillLeave == "function") {
       // Pass the callback to be called on completion
       this._component.componentWillLeave(done);
     } else {
